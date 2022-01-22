@@ -39,17 +39,20 @@ class BookSearch extends Component {
                 .then((searchRes) => {
                     let booksFormated = []
                     for (const ele of searchRes) {
-                        let tempStatus = 'None'
-                        let matchRes = this.state.booksArr.filter((main) => main.id === ele.id)
-                        if (matchRes.length >= 1) tempStatus = matchRes[0].shelf
-                        booksFormated.push({
-                            id: ele.id,
-                            name: ele.title,
-                            author: ele.authors[0],
-                            pic: 'url("' + ele.imageLinks.thumbnail + '")',
-                            status: tempStatus
-                        })
-                    }
+                            let tempStatus = 'None'
+                            let matchRes = this.state.booksArr.filter((main) => main.id === ele.id)
+                            if (matchRes.length >= 1) tempStatus = matchRes[0].shelf
+                            try{booksFormated.push({
+                                id: ele.id,
+                                name: ele.title,
+                                author: ele.authors[0],
+                                pic: 'url("' + ele.imageLinks.thumbnail + '")',
+                                status: tempStatus
+                            })}
+                            catch(e){
+                                console.log('no url found')
+                            }
+                        }
                     this.setState((oldState) => (
                         oldState.searchBooksArr = booksFormated
                     ))
