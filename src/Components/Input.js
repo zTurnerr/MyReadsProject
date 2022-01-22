@@ -1,5 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types';
+
+
+
+
+
+
 class Input extends React.Component {
     constructor(props) {
         super(props);
@@ -46,6 +53,12 @@ class Input extends React.Component {
 
 
 }
+
+
+Input.propTypes = {
+    searching: PropTypes.func
+}
+
 export default Input
 
 
@@ -58,30 +71,3 @@ export default Input
 
 
 
-
-
-// import { useDebounce } from 'use-debounce';
-
-// export default function Input() {
-//     const [text, setText] = useState('Hello');
-//     const [value] = useDebounce(text, 1000);
-
-//     return (
-//         <div className="search-books">
-//             <div className="search-books-bar">
-//                 <div className="search-books-input-wrapper">
-//                     <input
-//                         type="text"
-//                         placeholder="Search by title or author"
-//                         onChange={(e) => {
-//                             setText(e.target.value);
-//                         }}
-//                     />
-//                 </div>
-//             </div>
-
-//             <p>Actual value: {text}</p>
-//             <p>Debounce value: {value}</p>
-//         </div>
-//     );
-// }

@@ -15,7 +15,6 @@ class BookSearch extends Component {
             .then((booksRes) => {
                 let booksFormated = []
                 for (const ele of booksRes) {
-                    // console.log(ele.id)
                     booksFormated.push({
                         id: ele.id,
                         name: ele.title,
@@ -35,7 +34,6 @@ class BookSearch extends Component {
     }
 
     handleChangeSearchKey = (query) => {
-        console.log(query)
         if (query !== '') {
             API.search(query)
                 .then((searchRes) => {
@@ -70,12 +68,9 @@ class BookSearch extends Component {
     }
 
     BookUpdate = (bookid, newstatus) => {
-        console.log(bookid)
         let selectedIndex = (ele) => ele.id === bookid
         let index = this.state.searchBooksArr.findIndex(selectedIndex)
-        console.log(index)
         let changedBook = this.state.searchBooksArr[index]
-        console.log(index)
         changedBook.status = newstatus
         let allBooks = this.state.searchBooksArr
         allBooks[index] = changedBook

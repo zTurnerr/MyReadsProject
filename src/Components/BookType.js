@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types';
 
 
 class BookType extends Component {
@@ -26,6 +27,10 @@ class BookType extends Component {
     }
 }
 
+BookType.propTypes = {
+    updateStatus: PropTypes.func,
+    bookState: PropTypes.string,
+}
 
 
 
