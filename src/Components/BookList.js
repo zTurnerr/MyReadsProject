@@ -10,7 +10,11 @@ import * as API from '../BooksAPI';
 //     contacts: PropTypes.array.isRequired,
 //     onDeleteContact: PropTypes.func.isRequired,
 //   }
-
+/*
+2 things for 7naka
+make the shelves as component 
+make the book accept the book as it comes from the api
+*/
 class BookList extends Component {
     state = {
         booksArr: []
@@ -42,8 +46,8 @@ class BookList extends Component {
     }
 
 
-    BookUpdate = (bookname, newstatus) => {
-        let selectedIndex = (ele) => ele.name === bookname
+    BookUpdate = (bookid, newstatus) => {
+        let selectedIndex = (ele) => ele.id === bookid
         let index = this.state.booksArr.findIndex(selectedIndex)
         let changedBook = this.state.booksArr[index]
         changedBook.status = newstatus
@@ -101,7 +105,7 @@ class BookList extends Component {
                         </div>
                     </div>
                 </div>
-                <Link to='/create' className='open-search2'>Add a book</Link>
+                <Link to='/search' className='open-search2'>Add a book</Link>
             </div>
 
             </div>

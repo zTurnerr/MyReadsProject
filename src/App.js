@@ -4,6 +4,7 @@ import './App.css'
 import { Route, Routes } from 'react-router-dom';
 import BookList from './Components/BookList';
 import BookSearch from './Components/BookSearch';
+import Input from './Components/Input';
 
 
 class BooksApp extends React.Component {
@@ -15,7 +16,8 @@ class BooksApp extends React.Component {
       <div className="app">
         <Routes>
           <Route exact path='/' element={<BookList /> } />
-          <Route path='/create' element={<BookSearch />} />
+          <Route path='/search' element={<BookSearch />} />
+          <Route path='/test' element={<Input />} />
         </Routes>
       </div>
     )

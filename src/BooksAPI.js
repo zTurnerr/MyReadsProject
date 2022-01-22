@@ -42,3 +42,6 @@ export const update = (book, shelf) =>
     body: JSON.stringify({ query })
   }).then(res => res.json())
     .then(data => data.books)
+    .catch((err)=>{
+      console.log('query not passed correctly')
+    })

@@ -5,7 +5,7 @@ import BookType from './BookType';
 class Book extends Component {
 
     updateStatus = (newStatus) => {
-        this.props.update(this.props.bookElement.name, newStatus)
+        this.props.update(this.props.bookElement.id, newStatus)
     }
     render() {
         return (
