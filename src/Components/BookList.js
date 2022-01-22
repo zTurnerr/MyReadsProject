@@ -1,5 +1,8 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import Book from './Book';
+import * as API from '../BooksAPI';
+
 
 // import PropTypes from 'prop-types'
 
@@ -9,13 +12,98 @@ import {Link} from 'react-router-dom';
 //   }
 
 class BookList extends Component {
-    render(){
+    state = {
+        booksArr: []
+    }
+
+
+    BooksQuery = () => {
+        API.getAll()
+            .then((booksRes) => {
+                let booksFormated = []
+                for (const ele of booksRes) {
+                    // console.log(ele.id)
+                    booksFormated.push({
+                        id: ele.id,
+                        name: ele.title,
+                        author: ele.authors[0],
+                        pic: 'url("' + ele.imageLinks.thumbnail + '")',
+                        status: ele.shelf
+                    })
+                }
+                this.setState((oldState) => (
+                    oldState.booksArr = booksFormated
+                ))
+            })
+    }
+
+    componentDidMount() {
+        this.BooksQuery();
+    }
+
+
+    BookUpdate = (bookname, newstatus) => {
+        let selectedIndex = (ele) => ele.name === bookname
+        let index = this.state.booksArr.findIndex(selectedIndex)
+        let changedBook = this.state.booksArr[index]
+        changedBook.status = newstatus
+        let allBooks = this.state.booksArr
+        allBooks[index] = changedBook
+        API.update(this.state.booksArr[index], newstatus)
+            .then(() => {
+                this.setState({ allBooks })
+            })
+
+    }
+    render() {
         return (
-            <div>
-                <p>BookList</p>
-                <Link 
-                to='/create'
-                >create</Link>
+            <div>  <div className="list-books">
+                <div className="list-books-title">
+                    <h1>MyReads</h1>
+                </div>
+                <div className="list-books-content">
+                    <div>
+                        <div className="bookshelf">
+                            <h2 className="bookshelf-title">currentlyReading</h2>
+                            <div className="bookshelf-books">
+                                <ol className="books-grid">
+                                    {
+                                        this.state.booksArr.filter((book, index) => book.status === 'currentlyReading').map((book, index) => (
+                                            <li key={index}><Book bookElement={book} update={this.BookUpdate} /></li>
+                                        ))
+                                    }
+                                </ol>
+                            </div>
+                        </div>
+                        <div className="bookshelf">
+                            <h2 className="bookshelf-title">Want to Read</h2>
+                            <div className="bookshelf-books">
+                                <ol className="books-grid">
+                                    {
+                                        this.state.booksArr.filter((book, index) => book.status === 'wantToRead').map((book, index) => (
+                                            <li key={index}><Book bookElement={book} update={this.BookUpdate} /></li>
+                                        ))
+                                    }
+                                </ol>
+                            </div>
+                        </div>
+                        <div className="bookshelf">
+                            <h2 className="bookshelf-title">Read</h2>
+                            <div className="bookshelf-books">
+                                <ol className="books-grid">
+                                    {
+                                        this.state.booksArr.filter((book, index) => book.status === 'read').map((book, index) => (
+                                            <li key={index}><Book bookElement={book} update={this.BookUpdate} /></li>
+                                        ))
+                                    }
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <Link to='/create' className='open-search2'>Add a book</Link>
+            </div>
+
             </div>
         )
     }
